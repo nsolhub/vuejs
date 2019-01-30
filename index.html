@@ -19,6 +19,31 @@
 			color: white;
 			font-size: 25px;
 		}
+		.addtocartbtn{
+			padding: 10px;
+			font-size: 18px;
+			background: #569849;
+			color: white;
+		}
+		.removeFromCartbtn{
+			padding: 10px;
+			font-size: 18px;
+			background: #cc194a;
+			color: white;
+		}
+		.cartWidget{
+			position: fixed;
+			right: 100px;
+			background: #f3f3f9;
+			font-size: 20px;
+			padding: 10px;
+
+		}
+		.colorLi{
+			padding: 10px;
+			margin:  10px;
+			font-size: 20px;
+		}
 	</style>
 	<script type="text/javascript" src="vue.js"></script>
 </head>
@@ -31,9 +56,11 @@
 		</a>
 	</div>
 	<div class="width">
+		<div class="cartWidget" v-if="cart != 0 ">Cart({{cart}})</div>
 		<h1>{{product}}</h1>
 		<p v-if="inventory > 10"> in Stock </p>
-		<p v-else-if="inventory <= 10 && inventory > 0"> Hurry Up, it's getting out of your hand. </p>
+		<p v-else-if="inventory <= 10 && inventory > 0"> 
+			Hurry Up, it's getting out of your hand. </p>
 		<p v-else> out of Stock </p>
 		<span class="onsale" v-if="onSale">Sale is ONNN </span>
 		<h2 v-show="inStock">Hahahah Pakistan show</h2>
@@ -41,7 +68,23 @@
 		<ul>
 			<li v-for="product in products">{{product}}</li>
 		</ul>
-		<span v-for="variant in variants" :key="variant.variantId">{{variant.variantColor}}</span>
+
+		<span 
+			class="colorLi" 
+			v-for="variant in variants" 
+			:key="variant.variantId" 
+			@mouseover="updateImage(variant.variantImage)">
+			{{variant.variantColor}}.
+			<br>
+		</span>
+
+		<ul>
+			<li class="" v-for="size in sizes">{{size}}</li>
+
+		</ul>
+
+		<button v-on:click="addToCart"  class="addtocartbtn">Add to Cart</button>
+		<button v-on:click="removeFromCart" id="removecart"  class="removeFromCartbtn">Remove from Cart</button>
 	</div>
 </div>
 
@@ -51,7 +94,7 @@
 		data:{
 			product: 'socks',
 			link: 'http://www.google.com',
-			src: 'http://www.picsum.photos/600/300',
+			src: 'http://www.picsum.photos/600/503',
 			inStock: false,
 			inventory: 0,
 			onSale: false,
@@ -59,15 +102,31 @@
 			variants:[{
 						variantColor: 'blue',
 						variantId: 223,
+						variantImage: 'http://www.picsum.photos/600/502',
 					},
 					{
 						variantColor: 'green',
 						variantId: 224,
-					}
-					]
-
-
+						variantImage: 'http://www.picsum.photos/599/502',
+					}],
+			sizes:[10, 12, 15, 18, 20, 23, 25],
+			cart: 0,
+		},
+			//addToCart:10,
+		methods: {
+			addToCart: function(){
+				this.cart += 1
+			},
+			removeFromCart: function(){
+				this.cart -= 1
+			},
+			updateImage: function(Image){
+				this.src = Image
+			}
 		}
+
+
+		
 	});
 </script>
 </body>
