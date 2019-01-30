@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue js</title>
+	<style type="text/css">
+		.nav-bar{
+			width: 100%;
+			background: #569849;
+			height: 100px;
+			margin: 10px 1px;
+		}
+		.width{
+			margin: 10px 1px;
+			width: 49%;
+			float: left;
+		}
+		.onsale{
+			background: red;
+			color: white;
+			font-size: 25px;
+		}
+	</style>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div class="nav-bar"></div>
+<div id="app">
+	<div class="width">
+		<a :href="link">
+			<img v-bind:src="src">
+		</a>
+	</div>
+	<div class="width">
+		<h1>{{product}}</h1>
+		<p v-if="inventory > 10"> in Stock </p>
+		<p v-else-if="inventory <= 10 && inventory > 0"> Hurry Up, it's getting out of your hand. </p>
+		<p v-else> out of Stock </p>
+		<span class="onsale" v-if="onSale">Sale is ONNN </span>
+		<h2 v-show="inStock">Hahahah Pakistan show</h2>
+
+		<ul>
+			<li v-for="product in products">{{product}}</li>
+		</ul>
+		<span v-for="variant in variants" :key="variant.variantId">{{variant.variantColor}}</span>
+	</div>
+</div>
+
+<script type="">
+	var app = new Vue({
+		el: '#app',
+		data:{
+			product: 'socks',
+			link: 'http://www.google.com',
+			src: 'http://www.picsum.photos/600/300',
+			inStock: false,
+			inventory: 0,
+			onSale: false,
+			products: ['Socks', 'Cattens', 'Peshoo', 'Shoes', 'Keyboard'],
+			variants:[{
+						variantColor: 'blue',
+						variantId: 223,
+					},
+					{
+						variantColor: 'green',
+						variantId: 224,
+					}
+					]
+
+
+		}
+	});
+</script>
+</body>
+</body>
+</html>
