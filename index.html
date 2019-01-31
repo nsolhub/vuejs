@@ -1,98 +1,119 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Vue js</title>
-	<style type="text/css">
-		.nav-bar{
-			width: 100%;
-			background: #569849;
-			height: 100px;
-			margin: 10px 1px;
-		}
-		.width{
-			margin: 10px 1px;
-			width: 49%;
-			float: left;
-		}
-		.onsale{
-			background: red;
-			color: white;
-			font-size: 25px;
-		}
-		.addtocartbtn{
-			padding: 10px;
-			font-size: 18px;
-			background: #569849;
-			color: white;
-		}
-		.removeFromCartbtn{
-			padding: 10px;
-			font-size: 18px;
-			background: #cc194a;
-			color: white;
-		}
-		.cartWidget{
-			position: fixed;
-			right: 100px;
-			background: #f3f3f9;
-			font-size: 20px;
-			padding: 10px;
-
-		}
-		.colorLi{
-			padding: 10px;
-			margin:  10px;
-			font-size: 20px;
-		}
-	</style>
-	<script type="text/javascript" src="vue.js"></script>
+    <title>Vue js</title>
+    <style type="text/css">
+        .nav-bar {
+            width: 100%;
+            background: #569849;
+            height: 100px;
+            margin: 10px 1px;
+        }
+        
+        .width {
+            margin: 10px 1px;
+            width: 49%;
+            float: left;
+        }
+        
+        .onsale {
+            background: red;
+            color: white;
+            font-size: 25px;
+        }
+        
+        .addtocartbtn {
+            padding: 10px;
+            font-size: 18px;
+            background: #569849;
+            color: white;
+        }
+        
+        .removeFromCartbtn {
+            padding: 10px;
+            font-size: 18px;
+            background: #cc194a;
+            color: white;
+        }
+        
+        .cartWidget {
+            position: fixed;
+            right: 100px;
+            background: #f3f3f9;
+            font-size: 20px;
+            padding: 10px;
+        }
+        
+        .colorLi {
+            padding: 10px;
+            margin: 10px;
+            font-size: 20px;
+        }
+    </style>
+    <script type="text/javascript" src="vue.js"></script>
 </head>
+
 <body>
-<div class="nav-bar"></div>
-<div id="app">
-	<div class="width">
-		<a :href="link">
-			<img v-bind:src="src">
-		</a>
-	</div>
-	<div class="width">
-		<div class="cartWidget" v-if="cart != 0 ">Cart({{cart}})</div>
-		<h1>{{product}}</h1>
-		<p v-if="inventory > 10"> in Stock </p>
-		<p v-else-if="inventory <= 10 && inventory > 0"> 
-			Hurry Up, it's getting out of your hand. </p>
-		<p v-else> out of Stock </p>
-		<span class="onsale" v-if="onSale">Sale is ONNN </span>
-		<h2 v-show="inStock">Hahahah Pakistan show</h2>
+    <div class="nav-bar"></div>
+    <div id="app">
+        <div class="width">
+            <a :href="link">
+                <img v-bind:src="src">
+            </a>
+        </div>
+        <div class="width">
+            <div class="cartWidget" 
+            	v-if="cart != 0 ">
+            	Cart({{cart}})
+            </div>
+            <h1>{{product}}</h1>
+            <p v-if="inventory > 10"> in Stock </p>
 
-		<ul>
-			<li v-for="product in products">{{product}}</li>
-		</ul>
+            <p v-else-if="inventory <= 10 && inventory > 0">
+                Hurry Up, it's getting out of your hand. 
+            </p>
+            <p v-else> out of Stock </p>
 
-		<span 
-			class="colorLi" 
-			v-for="variant in variants" 
-			:key="variant.variantId" 
-			@mouseover="updateImage(variant.variantImage)">
-			{{variant.variantColor}}.
-			<br>
-		</span>
+            <span class="onsale" v-if="onSale">Sale is ONNN </span>
 
-		<ul>
-			<li class="" v-for="size in sizes">{{size}}</li>
+            <h2 v-show="inStock">Hahahah Pakistan show</h2>
 
-		</ul>
+            <ul>
+                <li v-for="product in products">{{product}}</li>
+            </ul>
 
-		<button v-on:click="addToCart"  class="addtocartbtn">Add to Cart</button>
-		<button v-on:click="removeFromCart" id="removecart"  class="removeFromCartbtn">Remove from Cart</button>
-	</div>
-</div>
+            <span class="colorLi" 
+            		v-for="variant in variants" 
+            		:key="variant.variantId" 
+            		@mouseover="updateImage(variant.variantImage)">
+						{{variant.variantColor}}.
+					<br>
+			</span>
 
+            <ul>
+                <li class="" 
+                v-for="size in sizes">
+            		{{size}}
+            	</li>
+            </ul>
+
+            <button v-on:click="addToCart" 
+            		class="addtocartbtn">
+            			Add to Cart
+            </button>
+            <button v-on:click="removeFromCart" 
+            		id="removecart" 
+            		class="removeFromCartbtn">
+            	Remove from Cart
+            </button>
+        </div>
+    </div>
 <script type="">
 	var app = new Vue({
 		el: '#app',
 		data:{
-			product: 'socks',
+			product: 'pakistan',
 			link: 'http://www.google.com',
 			src: 'http://www.picsum.photos/600/503',
 			inStock: false,

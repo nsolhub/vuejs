@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue js</title>
+    <style type="text/css">
+        .nav-bar {
+            width: 100%;
+            background: #569849;
+            height: 100px;
+            margin: 10px 1px;
+            display: block;
+            color: #fff;
+        }
+        
+        .width {
+            margin: 10px 1px;
+            width: 49%;
+            float: left;
+        }
+        
+        .onsale {
+            background: red;
+            color: white;
+            font-size: 25px;
+        }
+        
+        .addtocartbtn {
+            padding: 10px;
+            font-size: 18px;
+            background: #569849;
+            color: white;
+        }
+        
+        .removeFromCartbtn {
+            padding: 10px;
+            font-size: 18px;
+            background: #cc194a;
+            color: white;
+        }
+        
+        .cartWidget {
+            position: fixed;
+            right: 100px;
+            background: #f3f3f9;
+            font-size: 20px;
+            padding: 10px;
+        }
+        
+        .colorLi {
+            padding: 10px;
+            margin: 10px;
+            font-size: 20px;
+        }
+        .text-center{
+            text-align: center;
+            margin: auto;
+            vertical-align: middle;
+        }
+        .second li{
+            padding: 10px;
+            margin: 5px;
+            width: 30px;
+            height: 20px;
+            list-style: none;
+        }
+        .disabledButton{
+            background: #f9f9f9;
+            color: black;
+        }
+        .outOfStock{
+            text-decoration: line-through;
+        }
+    </style>
+
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <products v-for="product in products" 
+        			:key='product.id' 
+        			:product="product" 
+        			product-id='product.id'>
+        				
+		</products>
+    </div>
+<script type="">
+
+	Vue.component('products', {
+		props: ['product'],
+		template: `<div>
+					<h1> Product Name : {{product.name}}</h1>
+					<h2> product ID: {{product.id}} </h2>
+					</div>`,
+		data(){
+			products: [
+				{ name: 'addidas 404v', id: 1, },
+				{ name: 'adddddidas 340v', id: 2, }
+			],
+		},
+		
+		});
+
+	new Vue({
+		el: '#app',
+		
+		
+	});
+  
+</script>
+</body>
+</body>
+</html>

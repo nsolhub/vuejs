@@ -77,33 +77,53 @@
 </head>
 
 <body>
+
+    <div id="components-demo">
+      <greetings></greetings>
+      <greetings2></greetings2>
+      <demoz></demoz>
+      <greetings3></greetings3>
+      <greetings4></greetings4>
+    
+    </div>
+
+    <div class="" id="demo2">
+        <demoz></demoz>
+        <greetings2></greetings2>
+        <greetings5></greetings5>
+        <demoz></demoz>
+    </div>
+
     <div id="app">
         <div id="title" class="nav-bar text-center">
             <h1>{{productName}}</h1>
         </div>
     
         <div class="width">
-            <img :src="productImage"/>
+            <img :src="image"/>
         </div>
         <div class="width">
             <span class="cartWidget" v-if="cart != 0">Cart({{cart}})</span>
             <div class="second">
                 <h3> Colors: </h3>
                 <ul>
-                    <li v-for="color in productVariants" 
-                        @mouseover="changeProductImage(color.productImage)"
+                    <li v-for="(color, index) in productVariants"
+                        :key="color.productId"
+                        @mouseover="changeProductImage(index)"
                         :style="{backgroundColor : color.productColor}"> 
-                        
+
                     </li>
 
                 </ul>
             </div>
             <div class="other">
-                <span v-if="inventory > 10"> In Stock!! </span>
-                <span v-else-if="inventory <= 10 &&  inventory > 0 " > 
+                <span v-if="inventory > 10 && inStock"> In Stock!! </span>
+                <span v-else-if="inventory <= 10 &&  inventory > 0 && inStock" > 
                     Almost Sold Out, Hurry Up!!! 
                 </span>
                 <span v-else :class="{outOfStock : !inStock}"> Sold Out, Sorry! </span>
+
+
                 <br/>
                 <button class="addtocartbtn"
                         v-on:click="addToCart"
@@ -120,57 +140,101 @@
         </div>
     </div>
 <script type="">
+    Vue.component('greetings', {
+        template: '<button> Raheel Khan </button>'
+    });
+    Vue.component('greetings2', {
+        template: '<button> Raheeaal Khan </button>'
+    });
+    Vue.component('greetings3', {
+        template: '<button> shahh Khan </button>'
+    });
+    Vue.component('greetings4', {
+        template: '<button> stttttt Khan </button>'
+    });
+    new Vue({
+        el: '#components-demo'
+    });
+    
+
+    Vue.component('demoz', {
+        template: '<h1>heading one goes here for the component</h1>'
+    });
+    Vue.component('greetings5', {
+        template: '<button> stttttt Khan </button>'
+    });
+    new Vue({
+        el: '#demo2'
+    })
+
+    //new Vue({ el: '#components-demo' });
+    // Vue.component('buttoncounter', {
+    //     template: '<button> Rahessel Khan </button>'
+    // });
     var app = new Vue({
         el: '#app',
         data:{
-            productName     :   'Addidas Shoes Vue',
+            brandName       :   'Addidas',
+            productName     :   'Shoes Vue',
             productSizes    :   [10, 12, 15, 18, 20],
-            productImage    :   'http://www.picsum.photos/602/703',
-            productColors   :   ['blue', 'green'],
+            selectedVariant :   0,
+            //productImage    :   productVariants['selectedVariant'].productImage,
+            //productColors   :   ['blue', 'green'],
             productVariants :   [
                 {
                     productColor    :   'blue',
                     productId       :   221,
                     productImage    :   'http://www.picsum.photos/602/703',
-                    productQuantity : true,
+                    productQuantity :   true,
+                    onSale          :   true,
                 },
                 {
                     productColor    :   'green',
                     productId       :   '222',
                     productImage    :   'http://www.picsum.photos/603/701',
-                    productQuantity : true,
+                    productQuantity :   false,
+                    onSale          :   false,
                 }
             ],
             //inStock         :   true,
             inventory       :   5,
             cart            :   0,
-            selectedVariant :   0,
+            
 
             //css properties and styling goes here
 
         },
         methods: {
-            changeProductImage : function(changeImage){
-                this.productImage = changeImage
+            changeProductImage : function(index){
+                //console.log(index)
+                this.selectedVariant = index;
+                
             },
             addToCart          : function(){
                 if(this.inventory != 0){
-                    
                     this.cart += 1;
                     this.inventory -= 1;
+
                 } else{
-                    
+                    this.productVariants[this.selectedVariant].productQuantity = false; 
                 }
             },
             removeFromCart     : function(){
-                
                 this.cart -= 1;
                 this.inventory += 1;
+                this.productVariants[this.selectedVariant].productQuantity = true;
             } 
         },
         computed: {
             inStock() {
                 return this.productVariants[this.selectedVariant].productQuantity;
+            },
+            image(){
+
+                return this.productVariants[this.selectedVariant].productImage;
+            },
+            onSale  : function(index){
+                return this.productVariants[index].onSale;
             }
         }
     });
