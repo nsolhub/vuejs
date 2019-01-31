@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue js</title>
+    <style type="text/css">
+        .nav-bar {
+            width: 100%;
+            background: #569849;
+            height: 100px;
+            margin: 10px 1px;
+            display: block;
+            color: #fff;
+        }
+        
+        .width {
+            margin: 10px 1px;
+            width: 49%;
+            float: left;
+        }
+        
+        .onsale {
+            background: red;
+            color: white;
+            font-size: 25px;
+        }
+        
+        .addtocartbtn {
+            padding: 10px;
+            font-size: 18px;
+            background: #569849;
+            color: white;
+        }
+        
+        .removeFromCartbtn {
+            padding: 10px;
+            font-size: 18px;
+            background: #cc194a;
+            color: white;
+        }
+        
+        .cartWidget {
+            position: fixed;
+            right: 100px;
+            background: #f3f3f9;
+            font-size: 20px;
+            padding: 10px;
+        }
+        
+        .colorLi {
+            padding: 10px;
+            margin: 10px;
+            font-size: 20px;
+        }
+        .text-center{
+            text-align: center;
+            margin: auto;
+            vertical-align: middle;
+        }
+        .second li{
+            padding: 10px;
+            margin: 5px;
+            width: 30px;
+            height: 20px;
+            list-style: none;
+        }
+        .disabledButton{
+            background: #f9f9f9;
+            color: black;
+        }
+        .outOfStock{
+            text-decoration: line-through;
+        }
+    </style>
+
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="title" class="nav-bar text-center">
+            <h1>{{productName}}</h1>
+        </div>
+    
+        <div class="width">
+            <img :src="productImage"/>
+        </div>
+        <div class="width">
+            <span class="cartWidget" v-if="cart != 0">Cart({{cart}})</span>
+            <div class="second">
+                <h3> Colors: </h3>
+                <ul>
+                    <li v-for="color in productVariants" 
+                        @mouseover="changeProductImage(color.productImage)"
+                        :style="{backgroundColor : color.productColor}"> 
+                        
+                    </li>
+
+                </ul>
+            </div>
+            <div class="other">
+                <span v-if="inventory > 10"> In Stock!! </span>
+                <span v-else-if="inventory <= 10 &&  inventory > 0 " > 
+                    Almost Sold Out, Hurry Up!!! 
+                </span>
+                <span v-else :class="{outOfStock : !inStock}"> Sold Out, Sorry! </span>
+                <br/>
+                <button class="addtocartbtn"
+                        v-on:click="addToCart"
+                        :class="{disabledButton : !inStock}"
+                        :disabled="!inStock">
+                    Add to Cart
+                </button>
+                <button class="removeFromCartbtn"
+                        v-on:click="removeFromCart"
+                        v-if="cart !=0">
+                    Remove
+                </button>
+            </div>
+        </div>
+    </div>
+<script type="">
+    var app = new Vue({
+        el: '#app',
+        data:{
+            productName     :   'Addidas Shoes Vue',
+            productSizes    :   [10, 12, 15, 18, 20],
+            productImage    :   'http://www.picsum.photos/602/703',
+            productColors   :   ['blue', 'green'],
+            productVariants :   [
+                {
+                    productColor    :   'blue',
+                    productId       :   221,
+                    productImage    :   'http://www.picsum.photos/602/703',
+                    productQuantity : true,
+                },
+                {
+                    productColor    :   'green',
+                    productId       :   '222',
+                    productImage    :   'http://www.picsum.photos/603/701',
+                    productQuantity : true,
+                }
+            ],
+            //inStock         :   true,
+            inventory       :   5,
+            cart            :   0,
+            selectedVariant :   0,
+
+            //css properties and styling goes here
+
+        },
+        methods: {
+            changeProductImage : function(changeImage){
+                this.productImage = changeImage
+            },
+            addToCart          : function(){
+                if(this.inventory != 0){
+                    
+                    this.cart += 1;
+                    this.inventory -= 1;
+                } else{
+                    
+                }
+            },
+            removeFromCart     : function(){
+                
+                this.cart -= 1;
+                this.inventory += 1;
+            } 
+        },
+        computed: {
+            inStock() {
+                return this.productVariants[this.selectedVariant].productQuantity;
+            }
+        }
+    });
+
+</script>
+</body>
+</body>
+</html>
